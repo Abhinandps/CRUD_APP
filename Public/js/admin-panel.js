@@ -1,0 +1,135 @@
+/* eslint-disable */
+
+const fetchAllUsersData = async () => {
+  try {
+    const res = await axios.get('http://127.0.0.1:3000/api/v1/admin/');
+    const data = res.data.data;
+    const users = data.users;
+
+    const table = document.querySelector('table');
+
+    users.forEach((user, index) => {
+      const row = document.createElement('tr');
+
+      const updateButton = `<button type="button" class="updateBtn btn text-white bg-dark" data-user-id="${user._id}">update</button>`;
+      const deleteButton = `<button  type="button"class="deleteBtn btn text-white bg-danger" data-user-id="${user._id}">delete</button>`;
+
+      row.innerHTML = `
+            <th scope="row">${index + 1}</th>
+            <td>${user.firstName}${user.lastName}</td>
+            <td>${user.email}</td>
+            <td>${user.phone}</td>
+            <td>${updateButton}</td>
+            <td>${deleteButton}</td>
+            `;
+      table.appendChild(row);
+    });
+
+    const updateButtons = table.querySelectorAll('.updateBtn');
+    const deleteButtons = table.querySelectorAll('.deleteBtn');
+
+    // Update the User Details
+
+    if (updateButtons) {
+      updateButtons.forEach((button) => {
+        button.addEventListener('click', async () => {
+          const userId = button.dataset.userId;
+          try {
+            const res = await axios.get(
+              `http://127.0.0.1:3000/api/v1/admin/${userId}`
+            );
+
+            if (res.data.status === 'success') {
+              const formHTML = `
+                <form id="myForm">
+                  <label for="email">Email:</label>
+                  <input type="text" id="email" name="name" required>
+
+                  <label for="firstName">First name:</label>
+                  <input type="text" id="firstName" name="firstName" required>
+
+                  <label for="lastName">lastName :</label>
+                  <input type="text" id="lastName" name="lastName" required>
+
+                  <label for="phone">phone :</label>
+                  <input type="text" id="phone" name="phone" required>
+
+                  <button type="submit">Submit</button>
+                </form>
+              `;
+
+              document.write(formHTML);
+
+              const userData = res.data.data.user;
+              document.getElementById('email').value = userData.email;
+              document.getElementById('firstName').value = userData.firstName;
+              document.getElementById('lastName').value = userData.lastName;
+              document.getElementById('phone').value = userData.phone;
+
+              const form = document.getElementById('myForm');
+
+              form.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const email = document.getElementById('email').value;
+                const firstName = document.getElementById('firstName').value;
+                const lastName = document.getElementById('lastName').value;
+                const phone = document.getElementById('phone').value;
+
+                const formData = { email, firstName, lastName, phone };
+
+                try {
+                  const res = await axios.patch(
+                    `http://127.0.0.1:3000/api/v1/admin/${userId}`,
+                    formData
+                  );
+
+                  if (res.data.status === 'success') {
+                    window.location.href = '/dashboard';
+                  }
+                } catch (err) {
+                  console.log(err);
+                }
+              });
+            }
+          } catch (err) {
+            console.log(err);
+          }
+        });
+      });
+    }
+
+    // Delete User Details
+
+    if (deleteButtons) {
+      deleteButtons.forEach((button) => {
+        button.addEventListener('click', async () => {
+          const userId = button.dataset.userId;
+          try {
+            const result = window.confirm(
+              'Are you sure you want to delete this item?'
+            );
+            if (result) {
+              const res = await axios.delete(
+                `http://127.0.0.1:3000/api/v1/admin/${userId}`
+              );
+              if (res.status === 204) {
+                window.setTimeout(() => {
+                  location.reload(true);
+                }, 100);
+              }
+            } else {
+              // not handled
+            }
+          } catch (err) {
+            console.log(err);
+          }
+        });
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    // alert('An error occurred while fetching the user data.');
+  }
+};
+
+fetchAllUsersData();

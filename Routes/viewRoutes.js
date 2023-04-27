@@ -3,6 +3,7 @@ const express = require('express');
 const {
   getAdminLoginForm,
   adminDashboard,
+  adminUpdateForm,
   getLoginForm,
   getAccount,
   getSignUpForm,
@@ -21,6 +22,7 @@ const router = express.Router();
 // ADMIN VIEW
 router.get('/admin/login', adminIsLoggedIn,getAdminLoginForm);
 router.get('/dashboard', adminIsLoggedIn, adminDashboard);
+router.get('/edit', adminIsLoggedIn, adminUpdateForm);
 
 
 

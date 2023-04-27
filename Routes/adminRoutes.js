@@ -5,6 +5,7 @@ const {
   createUser,
   updateUser,
   deleteUser,
+  getUser,
 } = require('../Controllers/adminController');
 
 const {
@@ -19,9 +20,10 @@ router.post('/login', adminLogin);
 router.get('/logout', adminLogout);
 
 router.use(adminRouteProtect);
+
 router.get('/', getAllUsers);
 
-router.route('/:id').patch(updateUser).delete(deleteUser);
+router.route('/:id').get(getUser).patch(updateUser).delete(deleteUser);
 
 router.post('/addUser', createUser);
 module.exports = router;

@@ -26,6 +26,16 @@ exports.adminDashboard = (req,res)=>{
 }
 
 
+exports.adminUpdateForm = (req,res)=>{
+  if(req.user){
+    res.status(200).render('useForm', {
+      title: 'Log into your account',
+    });
+  }else{
+    res.redirect('/admin/login')
+  }
+}
+
 
 
 
