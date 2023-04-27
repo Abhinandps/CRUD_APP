@@ -1,14 +1,21 @@
+const express = require('express');
 
-const express = require('express')
-const router = express.Router()
-const {createUser,userLogin} = require('../Controllers/userController')
+const router = express.Router();
 
-router.route('/register')
-    .post(createUser)
+const { getUser, getMe } = require('../Controllers/userController');
+const {
+  protect,
+  signup,
+  login,
+  logout,
+} = require('../Controllers/authController');
 
-router.route('/login')
-    .post(userLogin)
+router.post('/signup', signup);
+router.post('/login', login);
+router.get('/logout', logout);
 
+router.use(protect);
 
+router.route('/me').get(getMe, getUser);
 
-module.exports = router
+module.exports = router;

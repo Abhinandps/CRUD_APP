@@ -19,28 +19,30 @@ exports.createUser = async (req, res) => {
     }
 }
 
+exports.getMe = (req, res, next) => {
+    req.params.id = req.user.id
+    next();
+  };
 
-exports.userLogin = async (req, res) => {
+exports.getUser = async (req, res) => {
     try {
-        const { email, password } = req.body
-        const user = await User.findOne({ email, password })
+        const user = await User.findById(req.params.id)
 
-        if (!user) {
-            throw Error()
-        }
-        else {
-            res.status(200).json({
-                status: 'success',
-                message: 'user login successfully'
-            })
-        }
+        res.status(201).json({
+            status: "success",
+            data: {
+                data: user
+            }
+        })
     } catch (err) {
         res.status(400).json({
             status: 'fail',
-            message: 'Invalid Login Credential'
+            message: err
         })
     }
 }
+
+
 
 
 

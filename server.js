@@ -1,6 +1,9 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
+// eslint-disable-next-line import/no-extraneous-dependencies
 const dotenv = require('dotenv')
 const app = require('./app')
+
+
 dotenv.config({ path: './config.env' })
 
 
@@ -11,5 +14,8 @@ const PORT = process.env.PORT || 4000
 
 
 app.listen(PORT, () => {
-    console.log(`App Listening to http://localhost:${PORT}`)
+    console.log(`App Listening to http://127.0.0.1:${PORT}`)
 })
+
+
+// TEST

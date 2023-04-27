@@ -1,0 +1,28 @@
+<%-include('header')-%> 
+
+
+
+
+<form id="admin-login-form" method="POST">
+    <h2>Admin Login Form</h2>
+    <div class="input-field">
+      <label for="email">Username</label>
+      <input type="email" id="email" placeholder="email" name="email" />
+    </div>
+  
+    <div class="input-field">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        placeholder="password"
+        name="password"
+      />
+    </div>
+  
+    <div class="button">
+      <input type="submit" value="login" />
+    </div>
+  </form>
+
+<%-include('footer')-%>
