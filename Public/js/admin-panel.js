@@ -33,11 +33,10 @@ const fetchAllUsersData = async () => {
 
         row.innerHTML = `
             <th scope="row">${index + 1}</th>
-            <td>${user.firstName}${user.lastName}</td>
+            <td>${user.firstName} ${user.lastName}</td>
             <td>${user.email}</td>
             <td>${user.phone}</td>
-            <td>${updateButton}</td>
-            <td>${deleteButton}</td>
+            <td>${updateButton} ${deleteButton}</td>
             `;
         table.appendChild(row);
       });
@@ -57,24 +56,35 @@ const fetchAllUsersData = async () => {
 
               if (res.data.status === 'success') {
                 const formHTML = `
-                <form id="myForm">
-                  <label for="email">Email:</label>
-                  <input type="text" id="email" name="name" required>
+               
 
-                  <label for="firstName">First name:</label>
-                  <input type="text" id="firstName" name="firstName" required>
+                <form id="myForm" class="w-50 p-5 mt-3">
+                <h2 class="text-center my-2">Update User</h2>
+                  <div class="mb-3">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="text" class="form-control" id="email" name="email" required>
+                  </div>
 
-                  <label for="lastName">lastName :</label>
-                  <input type="text" id="lastName" name="lastName" required>
+                  <div class="mb-3">
+                    <label for="firstName" class="form-label">First Name:</label>
+                    <input type="text" class="form-control" id="firstName" name="firstName" required>
+                  </div>
 
-                  <label for="phone">phone :</label>
-                  <input type="text" id="phone" name="phone" required>
+                  <div class="mb-3">
+                    <label for="lastName" class="form-label">Last Name:</label>
+                    <input type="text" class="form-control" id="lastName" name="lastName" required>
+                  </div>
 
-                  <button type="submit">Submit</button>
+                  <div class="mb-3">
+                    <label for="phone" class="form-label">Phone:</label>
+                    <input type="text" class="form-control" id="phone" name="phone" required>
+                  </div>
+
+                  <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
               `;
 
-                document.write(formHTML);
+                document.getElementById('formContainer').innerHTML = formHTML;
 
                 const userData = res.data.data.user;
                 document.getElementById('email').value = userData.email;
@@ -100,6 +110,7 @@ const fetchAllUsersData = async () => {
                     );
 
                     if (res.data.status === 'success') {
+                      alert('Updated Successfully');
                       window.location.href = '/dashboard';
                     }
                   } catch (err) {

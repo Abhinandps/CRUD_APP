@@ -1,25 +1,47 @@
-<%-include('header')-%> 
+<%-include('header')-%>
 
-<h1>Dashboard</h1>
-<button id="adminLogoutBtn">Logout</button>
+<div class="container">
 
-<input type="text" id="filter-input" placeholder="Filter...">
-
-
-<table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Email</th>
-        <th scope="col">Phone</th>
-        <th scope="col"></th>
-        <th scope="col"></th>
-      </tr>
-    </thead>
-    <tbody>
-       
-    </tbody>
-  </table>
+  
+  <!-- Dashboard Heading -->
+  <div class="row mt-5 ">
+    <div class="col-md-5">
+      <h1>Admin Dashboard</h1>
+    </div>
+    <div class="col-md-4">
+      <input
+        type="text"
+        id="filter-input"
+        class="form-control"
+        placeholder="Filter..."
+      />
+    </div>
+    <div class="col-md-2 text-end w-0">
+      <a href="/add" class="btn btn-success">Create User</a>
+    </div>
+    <div class="col-md-1 text-end">
+      <button id="adminLogoutBtn" class="btn btn-danger">Logout</button>
+    </div>
+  </div>
+  
+  <!-- User Listing Table -->
+  <div class="row mt-3" id="formContainer">
+    <div class="col">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+  <!-- Logout Button -->
+</div>
 
 <%-include('footer')-%>

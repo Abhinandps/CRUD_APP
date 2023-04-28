@@ -1,25 +1,6 @@
 const User = require("../Models/userModel")
 
-exports.adminLogin = async (req, res) => {
-    try {
-        const { email, password } = req.body
-        const admin = await User.findOne({ email, password, isAdmin: true })
-        if (!admin) {
-            throw Error()
-        }
-        else {
-            res.status(200).json({
-                status: 'success',
-                message: 'login successfully'
-            })
-        }
-    } catch (err) {
-        res.status(400).json({
-            status: 'fail',
-            message: 'Invalid Login Credentials'
-        })
-    }
-}
+
 
 exports.getAllUsers = async (req, res) => {
     try {

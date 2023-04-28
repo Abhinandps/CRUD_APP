@@ -1,40 +1,73 @@
-
-
-
 <%-include('header')-%>
 
+<a class="btn btn-secondary mx-3 my-3 text-white" href="/home">Home</a>
+
 <form id="signup-form">
-  <h2>Login Form</h2>
-  <div class="input-field">
+  <h2 class="text-center mb-4">Create Account</h2>
+  <div class="form-outline mb-2">
     <label for="email">Username</label>
-    <input type="email" id="email" placeholder="email" name="email" />
+    <input
+      type="email"
+      id="email"
+      placeholder="email"
+      name="email"
+      class="form-control"
+    />
   </div>
 
-  <div class="input-field">
+  <div class="form-outline mb-2">
     <label for="password">Password</label>
-    <input type="password" id="password" placeholder="password" name="password" />
+    <input
+      type="password"
+      id="password"
+      placeholder="password"
+      name="password"
+      class="form-control"
+    />
   </div>
 
-  <div class="input-field">
+  <div class="form-outline mb-2">
     <label for="firstname">Firstname</label>
-    <input type="name" id="firstname" placeholder="name" name="firstname" />
+    <input
+      type="name"
+      id="firstname"
+      placeholder="name"
+      name="firstname"
+      class="form-control"
+    />
   </div>
 
-  <div class="input-field">
+  <div class="form-outline mb-2">
     <label for="lastname">Lastname</label>
-    <input type="name" id="lastname" placeholder="name" name="lastname" />
+    <input
+      type="name"
+      id="lastname"
+      placeholder="name"
+      name="lastname"
+      class="form-control"
+    />
   </div>
 
-  <div class="input-field">
+  <div class="form-outline mb-2">
     <label for="phone">Phone</label>
-    <input type="text" id="phone" placeholder="+91-564-748-3467" name="phone" />
+    <input
+      type="text"
+      id="phone"
+      placeholder="+91-564-748-3467"
+      name="phone"
+      class="form-control"
+    />
   </div>
 
-  <div class="button">
-    <input type="submit" id="btn" value="signup">
-    <a href="/login">login</a>
+  <div id="errorElement" class="text-danger my-3 text-center"></div>
+
+  <div class="d-flex justify-content-center">
+    <button type="submit" class="btn btn-primary btn-block mb-4 text-center">
+      Sign Up
+    </button>
   </div>
+  <p class="text-center text-muted  mb-0">Have already an account? <a href="/login"
+    class="fw-bold text-body"><u>Login here</u></a></p>
 </form>
 
 <%-include('footer')-%>
-

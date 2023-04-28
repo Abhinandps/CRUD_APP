@@ -1,28 +1,40 @@
-<%-include('header')-%> 
+<%-include('header')-%>
 
-
-
+<a class="btn btn-secondary mx-3 my-3 text-white" href="/home">Home</a>
 
 <form id="admin-login-form" method="POST">
-    <h2>Admin Login Form</h2>
-    <div class="input-field">
-      <label for="email">Username</label>
-      <input type="email" id="email" placeholder="email" name="email" />
-    </div>
-  
-    <div class="input-field">
-      <label for="password">Password</label>
-      <input
-        type="password"
-        id="password"
-        placeholder="password"
-        name="password"
-      />
-    </div>
-  
-    <div class="button">
-      <input type="submit" value="login" />
-    </div>
-  </form>
+  <h2 class="text-center mb-4">Admin Login</h2>
+  <!-- Email input -->
+  <div class="form-outline mb-2">
+    <input
+      type="email"
+      id="email"
+      placeholder="email"
+      name="email"
+      class="form-control"
+    />
+    <label class="form-label" for="form2Example1">Email address</label>
+  </div>
+
+  <!-- Password input -->
+  <div class="form-outline mb-2">
+    <input
+      type="password"
+      id="password"
+      placeholder="password"
+      name="password"
+      class="form-control"
+    />
+    <label class="form-label" for="password">Password</label>
+  </div>
+
+  <div id="errorElement" class="text-danger my-3 text-center"></div>
+  <!-- Submit button -->
+  <div class="d-flex justify-content-center">
+    <button type="submit" class="btn btn-primary btn-block mb-4 text-center">
+      Sign in
+    </button>
+  </div>
+</form>
 
 <%-include('footer')-%>

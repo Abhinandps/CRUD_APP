@@ -1,9 +1,9 @@
 const express = require('express');
 
 const {
+  getHomePage,
   getAdminLoginForm,
   adminDashboard,
-  adminUpdateForm,
   getLoginForm,
   getAccount,
   getSignUpForm,
@@ -23,7 +23,6 @@ const router = express.Router();
 // ADMIN VIEW
 router.get('/admin/login', adminIsLoggedIn,getAdminLoginForm);
 router.get('/dashboard', adminIsLoggedIn, adminDashboard);
-router.get('/edit', adminIsLoggedIn, adminUpdateForm);
 router.get('/add', adminIsLoggedIn, createUserForm);
 
 
@@ -33,5 +32,10 @@ router.get('/signup', isLoggedIn, getSignUpForm);
 
 router.get('/', isLoggedIn, getOverview);
 router.get('/me', protect, getAccount);
+
+
+// INDEX
+
+router.get('/home',isLoggedIn,adminIsLoggedIn,getHomePage)
 
 module.exports = router;

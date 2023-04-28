@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 4000
 
 
 app.listen(PORT, () => {
-    console.log(`App Listening to http://127.0.0.1:${PORT}`)
+    console.log(`App Listening to http://127.0.0.1:${PORT}/home`)
 })
 
 

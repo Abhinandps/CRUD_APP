@@ -1,5 +1,7 @@
 /* eslint-disable */
 
+const errorElement = document.querySelector('#errorElement');
+
 const login = async (email, password) => {
   try {
     const res = await axios({
@@ -10,16 +12,16 @@ const login = async (email, password) => {
         password,
       },
     });
+    errorElement.textContent = '';
     if (res.data.status === 'success') {
       window.setTimeout(() => {
         location.assign('/');
       }, 1500);
     }
   } catch (err) {
-    console.log(err);
+    errorElement.textContent = err.response.data.message;
   }
 };
-
 
 const adminLogin = async (email, password) => {
   try {
@@ -31,16 +33,16 @@ const adminLogin = async (email, password) => {
         password,
       },
     });
+    errorElement.textContent = '';
     if (res.data.status === 'success') {
       window.setTimeout(() => {
         location.assign('/dashboard');
       }, 1500);
     }
   } catch (err) {
-    console.log(err);
+    errorElement.textContent = err.response.data.message;
   }
 };
-
 
 const signup = async (email, password, firstName, lastName, phone) => {
   try {
@@ -55,18 +57,16 @@ const signup = async (email, password, firstName, lastName, phone) => {
         phone,
       },
     });
-
+    errorElement.textContent = '';
     if (res.data.status === 'success') {
       window.setTimeout(() => {
         location.assign('/login');
       }, 1500);
     }
   } catch (err) {
-    console.log(err);
+    errorElement.textContent = `All fields are required`;
   }
 };
-
-
 
 const createUser = async (email, password, firstName, lastName, phone) => {
   try {
@@ -84,7 +84,7 @@ const createUser = async (email, password, firstName, lastName, phone) => {
 
     if (res.data.status === 'success') {
       window.setTimeout(() => {
-        alert('User Created Successfully')
+        alert('User Created Successfully');
         // location.reload(true)
         location.assign('/dashboard');
       }, 1500);
@@ -94,16 +94,18 @@ const createUser = async (email, password, firstName, lastName, phone) => {
   }
 };
 
-
-
-
 const logout = async () => {
   try {
-    const res = await axios({
-      method: 'GET',
-      url: 'http://127.0.0.1:3000/api/v1/user/logout'
-    });
-    if ((res.data.status = 'success')) location.reload(true);
+    const result = window.confirm('Are you sure you want to logout ?');
+    if (result) {
+      const res = await axios({
+        method: 'GET',
+        url: 'http://127.0.0.1:3000/api/v1/user/logout',
+      });
+      if ((res.data.status = 'success')) location.reload(true);
+    } else {
+      // not handled
+    }
   } catch (err) {
     console.log(err);
   }
@@ -111,31 +113,30 @@ const logout = async () => {
 
 const adminLogout = async () => {
   try {
-    const res = await axios({
-      method: 'GET',
-      url: 'http://127.0.0.1:3000/api/v1/admin/logout'
-    });
-    if ((res.data.status = 'success')) location.reload(true);
+    const result = window.confirm('Are you sure you want to logout ?');
+    if (result) {
+      const res = await axios({
+        method: 'GET',
+        url: 'http://127.0.0.1:3000/api/v1/admin/logout',
+      });
+      if ((res.data.status = 'success')) location.reload(true);
+    } else {
+      // not handled
+    }
   } catch (err) {
     console.log(err);
   }
 };
 
-
-
-
-// USER 
+// USER
 const loginForm = document.querySelector('#login-form');
 const signUpForm = document.querySelector('#signup-form');
-const logoutBtn = document.querySelector('#logoutBtn')
-
+const logoutBtn = document.querySelector('#logoutBtn');
 
 // ADMIN
 const adminLoginForm = document.querySelector('#admin-login-form');
-const adminLogoutBtn = document.querySelector('#adminLogoutBtn')
-const createUserForm = document.querySelector('#createUser-form')
-
-
+const adminLogoutBtn = document.querySelector('#adminLogoutBtn');
+const createUserForm = document.querySelector('#createUser-form');
 
 if (loginForm) {
   loginForm.addEventListener('submit', (e) => {
@@ -146,7 +147,6 @@ if (loginForm) {
   });
 }
 
-
 if (adminLoginForm) {
   adminLoginForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -155,8 +155,6 @@ if (adminLoginForm) {
     adminLogin(email, password);
   });
 }
-
-
 
 if (signUpForm) {
   signUpForm.addEventListener('submit', (e) => {
@@ -170,7 +168,6 @@ if (signUpForm) {
   });
 }
 
-
 if (createUserForm) {
   createUserForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -183,12 +180,10 @@ if (createUserForm) {
   });
 }
 
-
-if(logoutBtn){
-  logoutBtn.addEventListener('click',logout)
+if (logoutBtn) {
+  logoutBtn.addEventListener('click', logout);
 }
 
-if(adminLogoutBtn){
-  adminLogoutBtn.addEventListener('click',adminLogout)
+if (adminLogoutBtn) {
+  adminLogoutBtn.addEventListener('click', adminLogout);
 }
-

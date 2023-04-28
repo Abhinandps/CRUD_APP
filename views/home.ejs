@@ -1,6 +1,17 @@
 <%-include('header')-%> 
-Home
-<a href="/me">My Account</a>
-<button id="logoutBtn">Logout</button>
+
+<div class="container container-home ">
+    <h1>Welcome, [User Name]</h1>
+    <p>This is a short description of the user home page.</p>
+    <div class="row">
+     <div class="col-md-1">
+        <a  href="/me" class="btn btn-primary" type="button">Profile</a>
+     </div>
+     <div class="col-md-1">
+        <button class="btn btn-danger" id="logoutBtn" type="button">Logout</button>
+     </div>
+     
+    </div>
+  </div>
 
 <%-include('footer')-%>

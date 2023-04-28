@@ -1,5 +1,15 @@
 // const User = require("../Models/userModel")
 
+// HOME PAGE
+
+exports.getHomePage = (req, res) => {
+  if (req.user) {
+    res.redirect('/dashboard');
+  } else {
+    res.status(200).render('index');
+  }
+};
+
 // ADMIN VIEW CONTROLLERS
 
 exports.getAdminLoginForm = (req, res) => {
@@ -12,6 +22,7 @@ exports.getAdminLoginForm = (req, res) => {
   }
 };
 
+
 exports.adminDashboard = (req, res) => {
   if (req.user) {
     res.status(200).render('adminDashboard', {
@@ -22,15 +33,7 @@ exports.adminDashboard = (req, res) => {
   }
 };
 
-exports.adminUpdateForm = (req, res) => {
-  if (req.user) {
-    res.status(200).render('useForm', {
-      title: 'Log into your account',
-    });
-  } else {
-    res.redirect('/admin/login');
-  }
-};
+
 
 exports.createUserForm = (req, res) => {
   if (req.user) {
