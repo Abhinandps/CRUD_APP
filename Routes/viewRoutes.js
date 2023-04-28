@@ -8,6 +8,7 @@ const {
   getAccount,
   getSignUpForm,
   getOverview,
+  createUserForm
 } = require('../Controllers/viewsController');
 
 const {
@@ -23,7 +24,7 @@ const router = express.Router();
 router.get('/admin/login', adminIsLoggedIn,getAdminLoginForm);
 router.get('/dashboard', adminIsLoggedIn, adminDashboard);
 router.get('/edit', adminIsLoggedIn, adminUpdateForm);
-
+router.get('/add', adminIsLoggedIn, createUserForm);
 
 
 // USER VIEW

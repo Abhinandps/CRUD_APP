@@ -1,10 +1,8 @@
 // const User = require("../Models/userModel")
 
-
-
 // ADMIN VIEW CONTROLLERS
 
-exports.getAdminLoginForm = (req,res)=>{
+exports.getAdminLoginForm = (req, res) => {
   if (req.user) {
     res.redirect('/dashboard');
   } else {
@@ -12,34 +10,37 @@ exports.getAdminLoginForm = (req,res)=>{
       title: 'Log into your account',
     });
   }
-}
+};
 
-
-exports.adminDashboard = (req,res)=>{
-  if(req.user){
+exports.adminDashboard = (req, res) => {
+  if (req.user) {
     res.status(200).render('adminDashboard', {
       title: 'Log into your account',
     });
-  }else{
-    res.redirect('/admin/login')
+  } else {
+    res.redirect('/admin/login');
   }
-}
+};
 
-
-exports.adminUpdateForm = (req,res)=>{
-  if(req.user){
+exports.adminUpdateForm = (req, res) => {
+  if (req.user) {
     res.status(200).render('useForm', {
       title: 'Log into your account',
     });
-  }else{
-    res.redirect('/admin/login')
+  } else {
+    res.redirect('/admin/login');
   }
-}
+};
 
-
-
-
-
+exports.createUserForm = (req, res) => {
+  if (req.user) {
+    res.status(200).render('createUser', {
+      title: 'Create Account',
+    });
+  } else {
+    res.redirect('/admin/login');
+  }
+};
 
 // USER VIEW CONTROLLERS
 
@@ -55,7 +56,7 @@ exports.getLoginForm = (req, res) => {
 
 exports.getSignUpForm = (req, res) => {
   if (req.user) {
-    res.redirect('/')
+    res.redirect('/');
   } else {
     res.status(200).render('signup', {
       title: 'create new account',
@@ -78,7 +79,3 @@ exports.getOverview = (req, res) => {
     res.redirect('/login');
   }
 };
-
-
-
-

@@ -8,13 +8,30 @@ const fetchAllUsersData = async () => {
 
     const table = document.querySelector('table');
 
-    users.forEach((user, index) => {
-      const row = document.createElement('tr');
+    const filterInput = document.querySelector('#filter-input');
 
-      const updateButton = `<button type="button" class="updateBtn btn text-white bg-dark" data-user-id="${user._id}">update</button>`;
-      const deleteButton = `<button  type="button"class="deleteBtn btn text-white bg-danger" data-user-id="${user._id}">delete</button>`;
+    const filterUsers = (searchTerm) => {
+      const filteredUsers = users.filter((user) => {
+        const fullName = user.firstName + ' ' + user.lastName;
+        const email = user.email;
+        return (
+          fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          email.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      });
 
-      row.innerHTML = `
+      // Remove all rows from the table
+      while (table.rows.length > 1) {
+        table.deleteRow(1);
+      }
+
+      filteredUsers.forEach((user, index) => {
+        const row = document.createElement('tr');
+
+        const updateButton = `<button type="button" class="updateBtn btn text-white bg-dark" data-user-id="${user._id}">update</button>`;
+        const deleteButton = `<button  type="button"class="deleteBtn btn text-white bg-danger" data-user-id="${user._id}">delete</button>`;
+
+        row.innerHTML = `
             <th scope="row">${index + 1}</th>
             <td>${user.firstName}${user.lastName}</td>
             <td>${user.email}</td>
@@ -22,25 +39,24 @@ const fetchAllUsersData = async () => {
             <td>${updateButton}</td>
             <td>${deleteButton}</td>
             `;
-      table.appendChild(row);
-    });
+        table.appendChild(row);
+      });
 
-    const updateButtons = table.querySelectorAll('.updateBtn');
-    const deleteButtons = table.querySelectorAll('.deleteBtn');
+      const updateButtons = table.querySelectorAll('.updateBtn');
+      const deleteButtons = table.querySelectorAll('.deleteBtn');
 
-    // Update the User Details
+      // Update the User Details
+      if (updateButtons) {
+        updateButtons.forEach((button) => {
+          button.addEventListener('click', async () => {
+            const userId = button.dataset.userId;
+            try {
+              const res = await axios.get(
+                `http://127.0.0.1:3000/api/v1/admin/${userId}`
+              );
 
-    if (updateButtons) {
-      updateButtons.forEach((button) => {
-        button.addEventListener('click', async () => {
-          const userId = button.dataset.userId;
-          try {
-            const res = await axios.get(
-              `http://127.0.0.1:3000/api/v1/admin/${userId}`
-            );
-
-            if (res.data.status === 'success') {
-              const formHTML = `
+              if (res.data.status === 'success') {
+                const formHTML = `
                 <form id="myForm">
                   <label for="email">Email:</label>
                   <input type="text" id="email" name="name" required>
@@ -58,77 +74,85 @@ const fetchAllUsersData = async () => {
                 </form>
               `;
 
-              document.write(formHTML);
+                document.write(formHTML);
 
-              const userData = res.data.data.user;
-              document.getElementById('email').value = userData.email;
-              document.getElementById('firstName').value = userData.firstName;
-              document.getElementById('lastName').value = userData.lastName;
-              document.getElementById('phone').value = userData.phone;
+                const userData = res.data.data.user;
+                document.getElementById('email').value = userData.email;
+                document.getElementById('firstName').value = userData.firstName;
+                document.getElementById('lastName').value = userData.lastName;
+                document.getElementById('phone').value = userData.phone;
 
-              const form = document.getElementById('myForm');
+                const form = document.getElementById('myForm');
 
-              form.addEventListener('submit', async (event) => {
-                event.preventDefault();
-                const email = document.getElementById('email').value;
-                const firstName = document.getElementById('firstName').value;
-                const lastName = document.getElementById('lastName').value;
-                const phone = document.getElementById('phone').value;
+                form.addEventListener('submit', async (event) => {
+                  event.preventDefault();
+                  const email = document.getElementById('email').value;
+                  const firstName = document.getElementById('firstName').value;
+                  const lastName = document.getElementById('lastName').value;
+                  const phone = document.getElementById('phone').value;
 
-                const formData = { email, firstName, lastName, phone };
+                  const formData = { email, firstName, lastName, phone };
 
-                try {
-                  const res = await axios.patch(
-                    `http://127.0.0.1:3000/api/v1/admin/${userId}`,
-                    formData
-                  );
+                  try {
+                    const res = await axios.patch(
+                      `http://127.0.0.1:3000/api/v1/admin/${userId}`,
+                      formData
+                    );
 
-                  if (res.data.status === 'success') {
-                    window.location.href = '/dashboard';
+                    if (res.data.status === 'success') {
+                      window.location.href = '/dashboard';
+                    }
+                  } catch (err) {
+                    console.log(err);
                   }
-                } catch (err) {
-                  console.log(err);
-                }
-              });
-            }
-          } catch (err) {
-            console.log(err);
-          }
-        });
-      });
-    }
-
-    // Delete User Details
-
-    if (deleteButtons) {
-      deleteButtons.forEach((button) => {
-        button.addEventListener('click', async () => {
-          const userId = button.dataset.userId;
-          try {
-            const result = window.confirm(
-              'Are you sure you want to delete this item?'
-            );
-            if (result) {
-              const res = await axios.delete(
-                `http://127.0.0.1:3000/api/v1/admin/${userId}`
-              );
-              if (res.status === 204) {
-                window.setTimeout(() => {
-                  location.reload(true);
-                }, 100);
+                });
               }
-            } else {
-              // not handled
+            } catch (err) {
+              console.log(err);
             }
-          } catch (err) {
-            console.log(err);
-          }
+          });
         });
+      }
+
+      // Delete User Details
+      if (deleteButtons) {
+        deleteButtons.forEach((button) => {
+          button.addEventListener('click', async () => {
+            const userId = button.dataset.userId;
+            try {
+              const result = window.confirm(
+                'Are you sure you want to delete this item?'
+              );
+              if (result) {
+                const res = await axios.delete(
+                  `http://127.0.0.1:3000/api/v1/admin/${userId}`
+                );
+                if (res.status === 204) {
+                  window.setTimeout(() => {
+                    location.reload(true);
+                  }, 100);
+                }
+              } else {
+                // not handled
+              }
+            } catch (err) {
+              console.log(err);
+            }
+          });
+        });
+      }
+    };
+
+    // Filter Users
+    if (filterInput) {
+      filterInput.addEventListener('input', (e) => {
+        const filterValue = e.target.value;
+        filterUsers(filterValue);
       });
+      filterUsers('');
     }
   } catch (err) {
     console.log(err);
-    // alert('An error occurred while fetching the user data.');
   }
 };
 

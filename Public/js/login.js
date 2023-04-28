@@ -66,6 +66,37 @@ const signup = async (email, password, firstName, lastName, phone) => {
   }
 };
 
+
+
+const createUser = async (email, password, firstName, lastName, phone) => {
+  try {
+    const res = await axios({
+      method: 'POST',
+      url: 'http://127.0.0.1:3000/api/v1/admin/addUser',
+      data: {
+        email,
+        password,
+        firstName,
+        lastName,
+        phone,
+      },
+    });
+
+    if (res.data.status === 'success') {
+      window.setTimeout(() => {
+        alert('User Created Successfully')
+        // location.reload(true)
+        location.assign('/dashboard');
+      }, 1500);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+
+
+
 const logout = async () => {
   try {
     const res = await axios({
@@ -102,6 +133,7 @@ const logoutBtn = document.querySelector('#logoutBtn')
 // ADMIN
 const adminLoginForm = document.querySelector('#admin-login-form');
 const adminLogoutBtn = document.querySelector('#adminLogoutBtn')
+const createUserForm = document.querySelector('#createUser-form')
 
 
 
@@ -135,6 +167,19 @@ if (signUpForm) {
     const lastName = document.getElementById('lastname').value;
     const phone = document.getElementById('phone').value;
     signup(email, password, firstName, lastName, phone);
+  });
+}
+
+
+if (createUserForm) {
+  createUserForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const firstName = document.getElementById('firstname').value;
+    const lastName = document.getElementById('lastname').value;
+    const phone = document.getElementById('phone').value;
+    createUser(email, password, firstName, lastName, phone);
   });
 }
 
