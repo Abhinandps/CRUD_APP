@@ -70,6 +70,7 @@ exports.getSignUpForm = (req, res) => {
 exports.getAccount = (req, res) => {
   res.status(200).render('me', {
     title: 'my account',
+    user:req.user
   });
 };
 
@@ -77,6 +78,7 @@ exports.getOverview = (req, res) => {
   if (req.user) {
     res.status(200).render('home', {
       title: 'home',
+      user:req.user
     });
   } else {
     res.redirect('/login');

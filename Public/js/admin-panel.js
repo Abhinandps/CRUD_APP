@@ -6,6 +6,7 @@ const fetchAllUsersData = async () => {
     const data = res.data.data;
     const users = data.users;
 
+    // const table = document.querySelector('table');
     const table = document.querySelector('table');
 
     const filterInput = document.querySelector('#filter-input');
@@ -27,7 +28,7 @@ const fetchAllUsersData = async () => {
 
       filteredUsers.forEach((user, index) => {
         const row = document.createElement('tr');
-
+        row.classList.add('mt-5')
         const updateButton = `<button type="button" class="updateBtn btn text-white bg-dark" data-user-id="${user._id}">update</button>`;
         const deleteButton = `<button  type="button"class="deleteBtn btn text-white bg-danger" data-user-id="${user._id}">delete</button>`;
 
@@ -38,7 +39,7 @@ const fetchAllUsersData = async () => {
             <td>${user.phone}</td>
             <td>${updateButton} ${deleteButton}</td>
             `;
-        table.appendChild(row);
+            table.appendChild(row);
       });
 
       const updateButtons = table.querySelectorAll('.updateBtn');

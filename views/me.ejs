@@ -11,9 +11,9 @@
             <h4>My Profile</h4>
           </div>
           <div class="card-body">
-            <p><strong>Name:</strong> John Doe</p>
-            <p><strong>Email:</strong> johndoe@example.com</p>
-            <p><strong>Phone:</strong> 123-456-7890</p>
+            <p  class="text-capitalize"><strong>Name:</strong> <%=locals.user.firstName%> <%=locals.user.lastName%></p>
+            <p><strong>Email:</strong> <%=locals.user.email%></p>
+            <p><strong>Phone:</strong> <%=locals.user.phone%></p>
           </div>
         </div>
       </div>
