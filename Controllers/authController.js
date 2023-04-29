@@ -36,6 +36,7 @@ const createSendToken = (user, statusCode, res) => {
       data: user,
     },
   });
+
 };
 
 const createSendTokenForAdmin = (user, statusCode, res) => {
@@ -66,7 +67,30 @@ const createSendTokenForAdmin = (user, statusCode, res) => {
 exports.signup = async (req, res) => {
   try {
     const newUser = await User.create(req.body);
-    createSendToken(newUser, 201, res);
+    // createSendToken(newUser, 201, res);
+
+    const token = signToken(newUser._id);
+
+    const cookieOptions = {
+      expires: new Date(
+        Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+      ),
+      httpOnly: true,
+      secure: true,
+    };
+  
+    res.cookie('jwtAdmin', token, cookieOptions);
+  
+    // remove password from output
+    newUser.password = undefined;
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        data: newUser,
+      }
+    });
+
   } catch (err) {
     res.status(400).json({
       status: 'fail',
@@ -277,3 +301,6 @@ exports.adminIsLoggedIn = async (req, res, next) => {
   }
   next();
 };
+
+
+

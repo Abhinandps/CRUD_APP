@@ -28,7 +28,7 @@ const fetchAllUsersData = async () => {
 
       filteredUsers.forEach((user, index) => {
         const row = document.createElement('tr');
-        row.classList.add('mt-5')
+        row.classList.add('border')
         const updateButton = `<button type="button" class="updateBtn btn text-white bg-dark" data-user-id="${user._id}">update</button>`;
         const deleteButton = `<button  type="button"class="deleteBtn btn text-white bg-danger" data-user-id="${user._id}">delete</button>`;
 
