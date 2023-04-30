@@ -1,5 +1,4 @@
 const mongoose = require("mongoose")
-// eslint-disable-next-line import/no-extraneous-dependencies
 const dotenv = require('dotenv')
 const app = require('./app')
 
@@ -18,4 +17,3 @@ app.listen(PORT, () => {
 })
 
 
-// TEST

@@ -1,4 +1,3 @@
-// const User = require("../Models/userModel")
 
 // HOME PAGE
 
@@ -68,10 +67,14 @@ exports.getSignUpForm = (req, res) => {
 };
 
 exports.getAccount = (req, res) => {
-  res.status(200).render('me', {
-    title: 'my account',
-    user:req.user
-  });
+  if(req.user){
+    res.status(200).render('me', {
+      title: 'my account',
+      user:req.user
+    });
+  }else{
+    res.redirect('/home');
+  }
 };
 
 exports.getOverview = (req, res) => {

@@ -3,7 +3,6 @@ const express = require('express');
 
 const app = express();
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 const cookieParser = require('cookie-parser');
 
 const viewRouter = require('./Routes/viewRoutes');
@@ -20,21 +19,22 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // test middleware
-app.use((req, res, next) => {
+// app.use((req, res, next) => {
   // console.log(req.headers)
-  next();
-});
+  // next();
+// });
 
-// eslint-disable-next-line no-use-before-define
-app.use(addCacheControlHeader);
+// app.use(addCacheControlHeader);
 
 app.use('/', viewRouter);
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/admin', adminRouter);
 
-app.get('/', (req, res) => {
-  res.send('Welcome');
-});
+
+// app.get('/', (req, res) => {
+//   res.send('Welcome');
+// });
+
 
 app.all('*', (req, res, next) => {
   res.status(404).json({
